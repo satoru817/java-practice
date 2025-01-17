@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import Exception.*;
 
 public class ShapeGroup extends Shape{
     List<Shape> shapes;
@@ -22,7 +23,10 @@ public class ShapeGroup extends Shape{
     }
 
     @Override
-    void resize(double factor) {
+    void resize(double factor) throws InvalidShapeSizeException{
+        if(factor <= 0){
+            throw new InvalidShapeSizeException("ファクターが不正です");
+        }
         shapes.forEach(shape -> shape.resize(factor));
     }
 
@@ -43,7 +47,10 @@ public class ShapeGroup extends Shape{
         return shapes.size();
     }
 
-    public Shape getShapeAt(int index){
+    public Shape getShapeAt(int index) throws ShapeNotFoundException {
+        if(shapes.size()-1 <= index || index <0){
+            throw new ShapeNotFoundException("indexが不正です");
+        }
         return shapes.get(index);
     }
 }

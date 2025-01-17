@@ -1,8 +1,14 @@
+import Exception.InvalidShapeSizeException;
+
 public class Circle extends Shape{
     private double radius;
 
-    public Circle(String color,double radius){
+    public Circle(String color,double radius) throws InvalidShapeSizeException {
         super(color);
+        if(radius<=0){
+            throw  new InvalidShapeSizeException("半径の値が不正です。");
+        }
+
         this.radius = radius;
     }
 
@@ -21,7 +27,10 @@ public class Circle extends Shape{
     }
 
     @Override
-    void resize(double factor) {
+    void resize(double factor) throws InvalidShapeSizeException {
+        if(factor <= 0){
+            throw new InvalidShapeSizeException("ファクターが不正です");
+        }
         radius *= factor;
     }
 
