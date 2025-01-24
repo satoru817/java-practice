@@ -1,4 +1,10 @@
-package PACKAGE_NAME;
+public class Circle extends Shape{
+    public Circle(String name) {
+        super(name);
+    }
 
-public class Circle {
+    @Override
+    double calculateArea() {
+        return 0;
+    }
 }
