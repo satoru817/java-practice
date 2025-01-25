@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -74,4 +75,24 @@ public class Main {
 
         return true; // 素数
     }
+//    文字列のリストを受け取り、以下の処理を行うメソッドを実装してください：
+//
+//    各文字列を単語に分割（スペース区切り）
+//    各単語の出現回数をカウント
+//            出現回数が2回以上の単語のみ抽出
+//    結果をMap<String, Long>で返す（キー：単語、値：出現回数）
+public static Map<String, Long> findDuplicateWords(List<String> sentences) {
+    return sentences.stream()
+            .flatMap(sentence -> Arrays.stream(sentence.split("\\s+")))
+            .collect(Collectors.groupingBy(
+                    word -> word,
+                    Collectors.counting()
+            ))
+            .entrySet().stream()
+            .filter(entry -> entry.getValue() >= 2)
+            .collect(Collectors.toMap(
+                    Map.Entry::getKey,
+                    Map.Entry::getValue
+            ));
+}
 }
