@@ -1,7 +1,8 @@
 import java.time.LocalDate;
 
 public class Book {
-    private final static String ISBN = "^\\d{13}";
+    //private final static String ISBN = "^\\d{13}";これはミス。$をつけて末尾を明示しないと、"1234567890123abc"これが通ってしまう。
+    private final static String ISBN = "^\\d{13}$";
     private final String isbn;
     private final String title;
     private final String author;
