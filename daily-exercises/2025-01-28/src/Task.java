@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 public class Task {
     private final int id;
@@ -15,8 +16,10 @@ public class Task {
         this.createdAt = LocalDateTime.now();
     }
 
+
+
     public void checkTitle(String title){
-        if(title == null ||title.isEmpty()){
+        if(title == null ||title.trim().isEmpty()){
             throw new IllegalArgumentException("有効なタイトルを設定してください");
         }
     }
