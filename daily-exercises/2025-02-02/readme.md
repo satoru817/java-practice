@@ -319,33 +319,83 @@ public class LibraryManager {
 
 次は、もっと複雑なデザインパターンを使用する問題や、並行処理を含む問題などに進みましょうか？
 
-/**
-* タスク処理システムを実装してください。
-* このシステムは非同期でタスクを処理し、その進捗状況を監視できる必要があります。
-*
-* 要件:
-* 1. タスクは優先度（HIGH, MEDIUM, LOW）を持つ
-* 2. タスクの状態（WAITING, RUNNING, COMPLETED, FAILED）を管理
-* 3. 優先度の高いタスクが優先して実行される
-* 4. 同時に実行できるタスクの数は最大3つまで
-* 5. タスクの実行状態が変化した際にオブザーバーに通知
-*
-* 実装するクラス：
-* - Task: タスクの基本情報を保持
-* - TaskExecutor: タスクの実行を管理
-* - TaskObserver: タスクの状態変化を監視
-* - TaskManager: 全体の管理を行う（Singleton）
-*
-* 使用例：
-* TaskManager manager = TaskManager.getInstance();
-* Task task = new Task("データ処理", Priority.HIGH);
-* manager.addTask(task);
-* manager.startProcessing();
-*
-* ヒント：
-* - ExecutorServiceを使用してタスクを実行
-* - Observerパターンで状態変化を通知
-* - PriorityBlockingQueueで優先度付きキューを実装
-    */
+はい、了解しました。では新しいチャットで、基本的なタスク管理システムの続きから始めましょう。
 
-// ここにクラスを実装してください
+前回の問題内容を要約すると：
+
+```java
+/**
+ * 簡単なタスク管理システムを作成してください。
+ * Taskクラスは以下の機能を持ちます：
+ * 
+ * - タスクID（整数）
+ * - タスク名（文字列）
+ * - 優先度（列挙型 - HIGH, MEDIUM, LOW）
+ * - 完了状態（boolean）
+ * 
+ * 実装すべき機能：
+ * 1. コンストラクタ（ID、タスク名、優先度を設定）
+ * 2. 各フィールドのgetter
+ * 3. タスクを完了状態に変更するメソッド
+ * 4. toString()メソッドのオーバーライド（タスクの情報を文字列で返す）
+ * 
+ * 例：
+ * Task task = new Task(1, "レポート作成", Priority.HIGH);
+ * System.out.println(task); // "タスク{ID=1, 名前='レポート作成', 優先度=HIGH, 完了=false}"
+ * task.complete();
+ * System.out.println(task); // "タスク{ID=1, 名前='レポート作成', 優先度=HIGH, 完了=true}"
+ */
+
+enum Priority {
+    HIGH, MEDIUM, LOW
+}
+```
+
+このTaskクラスを実装してみてください。
+
+はい、では元の問題を段階的に分解して、次のステップとなる適度な難易度の問題を出題します。
+
+```java
+/**
+ * 前回作成したTaskクラスを拡張し、タスクの状態管理を実装してください。
+ * 
+ * 要件:
+ * 1. タスクの状態（TaskStatus）を追加:
+ *    - WAITING: 待機中
+ *    - RUNNING: 実行中
+ *    - COMPLETED: 完了
+ *    - FAILED: 失敗
+ * 
+ * 2. タスクに以下の機能を追加:
+ *    - 状態の取得・変更
+ *    - 実行開始時刻の記録
+ *    - 完了時刻の記録
+ * 
+ * 3. タスクの状態変更時に以下の検証を実装:
+ *    - WAITINGからRUNNINGへの変更は可能
+ *    - RUNNINGからCOMPLETEDまたはFAILEDへの変更は可能
+ *    - その他の状態遷移は不可（例外をスロー）
+ * 
+ * 使用例:
+ * Task task = new Task(1, "レポート作成", Priority.HIGH);
+ * System.out.println(task.getStatus()); // WAITING
+ * 
+ * task.start(); // 状態をRUNNINGに変更し、開始時刻を記録
+ * System.out.println(task.getStatus()); // RUNNING
+ * 
+ * task.complete(); // 状態をCOMPLETEDに変更し、完了時刻を記録
+ * System.out.println(task.getStatus()); // COMPLETED
+ */
+
+enum TaskStatus {
+    WAITING, RUNNING, COMPLETED, FAILED
+}
+```
+
+この問題は：
+1. 前回のTaskクラスの基礎の上に構築
+2. 状態管理の概念を導入
+3. 時刻の記録を追加
+4. 基本的な状態遷移のバリデーション
+
+という要素を含んでいます。これは、最終的な並行処理とデザインパターンの実装に進む前の、適切な中間ステップとなるはずです。
