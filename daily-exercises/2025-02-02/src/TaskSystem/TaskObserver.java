@@ -1,4 +1,4 @@
 package TaskSystem;
 
-public class TaskObserver {
+public interface TaskObserver {
 }
