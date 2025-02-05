@@ -43,3 +43,74 @@ public class ProductCodeFormatter {
 基本的な文字列操作のメソッド（`toUpperCase()`, `trim()`, `replaceAll()`, `substring()` など）を使用して実装してみてください。
 
 この問題は10-15分程度で解けるはずです。準備ができたら実装を始めてください。
+
+良い実装ですね。いくつかの優れたポイントと、さらに改善できる点について説明させていただきます：
+
+### 優れている点 👍
+
+1. **定数の活用**
+  - 正規表現パターンを定数として定義
+  - コンパイル済みのPatternを再利用
+
+2. **段階的な処理**
+  - 既に正しい形式かチェック
+  - スペース削除と大文字変換
+  - ハイフン追加
+    という論理的な流れで実装
+
+3. **正規表現の活用**
+  - 2つの異なるパターンを使用（ハイフンあり/なし）
+  - `\\s+` での空白文字の除去
+
+### 改善できる点 🔧
+
+1. **エラー処理の明確化**
+```java
+public static String formatCode(String code) {
+    if (code == null) {
+        return null;
+    }
+    // ... 残りの実装
+}
+```
+
+2. **メソッドの分割**
+```java
+private static String removeNonAlphanumeric(String code) {
+    return code.replaceAll("[^A-Z0-9]", "");
+}
+
+private static String insertHyphens(String code) {
+    StringBuilder sb = new StringBuilder(code);
+    sb.insert(2, "-");
+    sb.insert(6, "-");
+    return sb.toString();
+}
+```
+
+3. **コメントの追加**
+```java
+/** 正規表現：AA-999-XX形式（ハイフンあり） */
+private final static String VALID_FORMAT = "^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$";
+
+/** 正規表現：AA999XX形式（ハイフンなし） */
+private final static String NEARLY_VALID_FORMAT = "^[A-Z]{2}[0-9]{3}[A-Z]{2}$";
+```
+
+### テストケース案
+
+```java
+@Test
+public void testFormatCode() {
+    assertEquals("AB-123-XY", ProductCodeFormatter.formatCode("AB-123-XY"));
+    assertEquals("AB-123-XY", ProductCodeFormatter.formatCode("ab-123-xy"));
+    assertEquals("AB-123-XY", ProductCodeFormatter.formatCode("AB123XY"));
+    assertEquals("AB-123-XY", ProductCodeFormatter.formatCode("AB 123 XY"));
+    assertNull(ProductCodeFormatter.formatCode("A1-123-XY"));
+    assertNull(ProductCodeFormatter.formatCode(null));
+}
+```
+
+総じて、基本的な文字列操作の知識を活かした良い実装ができていると思います。正規表現を使用した検証とStringBuilderを使用した文字列操作の組み合わせが効果的です。
+
+--実際30分くらい調べながら書いた。まだまだ甘い。  
