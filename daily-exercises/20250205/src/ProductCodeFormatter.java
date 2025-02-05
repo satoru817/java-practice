@@ -2,7 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProductCodeFormatter {
-    private final static String VALID_FORMAT = "^[A-Z]{3}-^[0-9]{3}-^[A-Z]{2}";
+    private final static String VALID_FORMAT = "^[A-Z]{2}-[0-9]{3}-[A-Z]{2}";
     private final static Pattern pattern = Pattern.compile(VALID_FORMAT);
 
     // 商品コードが正しい形式かチェック
